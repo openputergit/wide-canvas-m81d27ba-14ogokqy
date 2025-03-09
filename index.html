@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Driving License Service</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<style>
+    body {
+        font-family: 'Poppins', sans-serif;
+    }
+    .container {
+        display: none;
+    }
+    .container.active {
+        display: block;
+    }
+    .error {
+        border-color: red;
+    }
+    .form-section {
+        display: none;
+    }
+    .form-section.active {
+        display: block;
+    }
+    .progress-bar {
+        width: 100%;
+        height: 4px;
+        background-color: #e5e7eb;
+        border-radius: 2px;
+        margin: 1rem 0;
+    }
+    .progress {
+        height: 100%;
+        background-color: #2563eb;
+        border-radius: 2px;
+        transition: width 0.3s ease;
+    }
+</style>
+
+<body class="bg-gray-100 min-h-screen">
+    <!-- Login Container -->
+    <div id="loginContainer" class="container active">
+        <!-- [Previous login HTML] -->
+    </div>
+
+    <!-- Signup Container -->
+    <div id="signupContainer" class="container">
+        <!-- [Previous signup HTML] -->
+    </div>
+
+    <!-- Home Container -->
+    <div id="homeContainer" class="container">
+        <!-- [Previous home HTML] -->
+    </div>
+
+    <!-- Learning License Application Form -->
+    <div id="learningLicenseForm" class="container">
+        <nav class="bg-white shadow-lg">
+            <div class="max-w-7xl mx-auto px-4">
+                <div class="flex justify-between h-16">
+                    <div class="flex items-center">
+                        <span class="text-xl font-bold">Learning License Application</span>
+                    </div>
+                    <div class="flex items-center">
+                        <button onclick="goBack()" class="text-gray-600 hover:text-gray-800">
+                            <i class="bi bi-arrow-left mr-2"></i>Back
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <div class="max-w-4xl mx-auto px-4 py-8">
+            <!-- Progress Bar -->
+            <div class="progress-bar">
+                <div id="formProgress" class="progress" style="width: 0%"></div>
+            </div>
+
+            <form id="learningLicenseApplicationForm" class="space-y-6">
+                <!-- Section 1: Personal Information -->
+                <div class="form-section active" id="section1">
+                    <h3 class="text-xl font-semibold mb-4">Personal Information</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">First Name*</label>
+                            <input type="text" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Middle Name</label>
+                            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border">
+                        </div>
+                        <!-- [More fields as per your specifications] -->
+                    </div>
+                    <div class="mt-4 flex justify-end">
+                        <button type="button" onclick="nextSection(1)" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                            Next <i class="bi bi-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- [Additional sections for address, medical info, etc.] -->
+
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // [Previous JavaScript functions]
+
+        // Form navigation functions
+        let currentSection = 1;
+        const totalSections = 8;
+
+        function updateProgressBar() {
+            const progress = (currentSection - 1) / totalSections * 100;
+            document.getElementById('formProgress').style.width = `${progress}%`;
+        }
+
+        function nextSection(section) {
+            // Validate current section
+            if (!validateSection(section)) {
+                alert('Please fill in all required fields');
+                return;
+            }
+
+            // Hide current section
+            document.querySelector(`#section${section}`).classList.remove('active');
+            // Show next section
+            document.querySelector(`#section${section + 1}`).classList.add('active');
+            currentSection++;
+            updateProgressBar();
+        }
+
+        function previousSection(section) {
+            // Hide current section
+            document.querySelector(`#section${section}`).classList.remove('active');
+            // Show previous section
+            document.querySelector(`#section${section - 1}`).classList.add('active');
+            currentSection--;
+            updateProgressBar();
+        }
+
+        function validateSection(section) {
+            // Add validation logic for each section
+            const currentSectionElement = document.querySelector(`#section${section}`);
+            const requiredFields = currentSectionElement.querySelectorAll('[required]');
+            return Array.from(requiredFields).every(field => field.value.trim() !== '');
+        }
+
+        function goBack() {
+            showHome();
+        }
+
+        // [Additional JavaScript functions as needed]
+    </script>
+<script>document.body.addEventListener('wheel', e => { if (!e.ctrlKey) return; e.preventDefault(); return }, { passive: false })</script>
+	</body>
+</html>
